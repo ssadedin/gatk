@@ -446,7 +446,7 @@
     <!-- ******************************************************************************** -->
 
     <target name="gatk.compile.internal.source" depends="init,resolve">
-        <javac fork="true" memoryMaximumSize="512m" destdir="${java.classes}" debug="true" debuglevel="lines,vars,source" classpathref="external.dependencies" tempdir="${java.io.tmpdir}">
+        <javac source="1.7"  target="1.7"  fork="true" memoryMaximumSize="512m" destdir="${java.classes}" debug="true" debuglevel="lines,vars,source" classpathref="external.dependencies" tempdir="${java.io.tmpdir}">
             <src refid="java.source.path" />
             <compilerarg value="-proc:none" />
         </javac>
@@ -464,7 +464,7 @@
     <target name="gatk.compile.source" depends="gatk.compile.internal.source,gatk.compile.external.source" description="Compile the GATK source" />
 
     <target name="gatk.contracts" depends="gatk.compile.source" if="include.contracts">
-        <javac fork="true" memoryMaximumSize="512m" destdir="${java.contracts.dir}" debug="true" debuglevel="lines,vars,source" tempdir="${java.io.tmpdir}" >
+        <javac source="1.7"  target="1.7"  fork="true" memoryMaximumSize="512m" destdir="${java.contracts.dir}" debug="true" debuglevel="lines,vars,source" tempdir="${java.io.tmpdir}" >
             <src refid="java.source.path" />
             <classpath>
                 <path refid="external.dependencies" />
@@ -1143,7 +1143,7 @@
 
    <target name="test.java.internal.compile" depends="dist,test.init.compile">
         <echo message="Sting: Compiling java test cases!"/>
-        <javac fork="true" memoryMaximumSize="512m" destdir="${java.test.classes}" debug="true" optimize="on" tempdir="${java.io.tmpdir}">
+        <javac source="1.7"  target="1.7"  fork="true" memoryMaximumSize="512m" destdir="${java.test.classes}" debug="true" optimize="on" tempdir="${java.io.tmpdir}">
             <src refid="java.test.source.path" />
             <classpath>
                 <path refid="build.results" />
@@ -1155,7 +1155,7 @@
 
     <target name="test.java.external.compile" depends="dist,test.init.compile,test.java.internal.compile" if="include.external">
         <echo message="Sting: Compiling external java test cases!"/>
-        <javac fork="true" memoryMaximumSize="512m" destdir="${java.test.classes}" debug="true" optimize="on" tempdir="${java.io.tmpdir}" srcdir="${external.dir}">
+        <javac source="1.7"  target="1.7"  fork="true" memoryMaximumSize="512m" destdir="${java.test.classes}" debug="true" optimize="on" tempdir="${java.io.tmpdir}" srcdir="${external.dir}">
             <include name="*/test/**/*.java"/>
             <classpath>
                 <path refid="build.results" />
@@ -1397,12 +1397,12 @@
         </condition>
         <fail message="Must specify a specific test. Usage: ant fasttest -Dsingle=TestClass" if="no.single.test.specified" />
 
-        <javac fork="true" memoryMaximumSize="512m" destdir="${java.classes}" debug="true" debuglevel="lines,vars,source" classpathref="external.dependencies" tempdir="${java.io.tmpdir}">
+        <javac source="1.7"  target="1.7"  fork="true" memoryMaximumSize="512m" destdir="${java.classes}" debug="true" debuglevel="lines,vars,source" classpathref="external.dependencies" tempdir="${java.io.tmpdir}">
             <src refid="java.source.path" />
             <compilerarg value="-proc:none" />
         </javac>
 
-        <javac fork="true" memoryMaximumSize="512m" destdir="${java.test.classes}" debug="true" optimize="on" tempdir="${java.io.tmpdir}">
+        <javac source="1.7"  target="1.7"  fork="true" memoryMaximumSize="512m" destdir="${java.test.classes}" debug="true" optimize="on" tempdir="${java.io.tmpdir}">
             <src refid="java.test.source.path" />
             <classpath>
                 <pathelement location="${java.classes}"/>
