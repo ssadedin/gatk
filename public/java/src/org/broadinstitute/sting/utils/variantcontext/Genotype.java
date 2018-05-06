@@ -351,8 +351,18 @@ public abstract class Genotype implements Comparable<Genotype> {
         // 1. Make sure to use the appropriate separator depending on whether the genotype is phased
         // 2. If ignoreRefState is true, then we want just the bases of the Alleles (ignoring the '*' indicating a ref Allele)
         // 3. So that everything is deterministic with regards to integration tests, we sort Alleles (when the genotype isn't phased, of course)
-        return ParsingUtils.join(isPhased() ? PHASED_ALLELE_SEPARATOR : UNPHASED_ALLELE_SEPARATOR,
-                ignoreRefState ? getAlleleStrings() : (isPhased() ? getAlleles() : ParsingUtils.sortList(getAlleles())));
+        String separator = isPhased() ? PHASED_ALLELE_SEPARATOR : UNPHASED_ALLELE_SEPARATOR;
+        List<String> alleles;
+        if(ignoreRefState) 
+                alleles = getAlleleStrings();
+        else {
+            alleles = new ArrayList<String>();
+            List<Allele> sorted = isPhased() ? getAlleles() : ParsingUtils.sortList(getAlleles());
+            for(Allele a : sorted) {
+                alleles.add(a.getBaseString());
+            }
+        }
+        return ParsingUtils.join(separator,alleles);
     }
 
     /**

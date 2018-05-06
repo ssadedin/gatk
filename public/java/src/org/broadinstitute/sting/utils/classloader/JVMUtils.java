@@ -197,7 +197,11 @@ public class JVMUtils {
      * @return the list of class path urls.
      */
     public static Set<URL> getClasspathURLs() {
-        return ClasspathHelper.forManifest();
+        HashSet<URL> urls = new HashSet<URL>();
+        for(URL url : ClasspathHelper.forManifest()) {
+            urls.add(url);
+        }
+        return urls;
     }
 
     /**
